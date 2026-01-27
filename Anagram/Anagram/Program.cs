@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.Tracing;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Xml;
 
 namespace Namespace
@@ -39,6 +40,13 @@ namespace Namespace
                     Console.WriteLine("Enter the word containing " + MinWordLength + " letters or more: ");
                     Word = Console.ReadLine() ?? string.Empty;
                 } while (Word.Count() < MinWordLength || Word == string.Empty);
+                Word = Word.ToLower();
+            }
+
+            public void ShowOutput(List<string> anagramList)
+            {
+                foreach (string anagram in anagramList)
+                    Console.WriteLine(anagram);
             }
         }
 
@@ -46,34 +54,38 @@ namespace Namespace
         {
             public List<string> ReadWords()
             {
-                var text = new List<string> { };
-                var words = new List<string> { };
-                text = File.ReadAllLines(filePath).ToList();
-                foreach (string textLine in text)
+                var textLineList = new List<string> { };
+                var wordsList = new List<string> { };
+                textLineList = File.ReadAllLines(filePath).ToList();
+                foreach (string textLine in textLineList)
                 {
                     foreach (string word in textLine.Split())
                     {
-                        word.ToLower();
-                        if (!words.Contains(word))
-                            words.Add(word);
+                        var lowercaseWord = word.ToLower();
+                        if (!wordsList.Contains(lowercaseWord))
+                            wordsList.Add(lowercaseWord);
                     }
                 }
 
-                return words;
+                return wordsList;
             }
         }
 
-        public class AnagramSolver(List<string> wordList)
+        public class AnagramSolver(List<string> wordList, int anagramCount)
         {
             private List<string> WordList { get; } = wordList;
 
+            private int AnagramCount { get; } = anagramCount;
+
             public List<string> FindAnagrams(string word)
             {
-                var dictionary = CreateDictionary(wordList);
+                var dictionary = CreateDictionary(WordList);
                 string sortedWord = SortWord(word);
                 if (dictionary.ContainsKey(sortedWord))
                 {
-                    return dictionary[sortedWord];
+                    dictionary[sortedWord].Remove(word);
+                    var anagramList = dictionary[sortedWord].Take(AnagramCount);
+                    return anagramList.ToList();
                 }
                 else
                 {
@@ -105,16 +117,22 @@ namespace Namespace
 
         public static void Main()
         {
+            Console.InputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
+
             var userInterface = new UserInterface();
+
             userInterface.ReadInput();
 
             var settings = new Settings(userInterface.MinWordLength, userInterface.AnagramCount, userInterface.Word!);
 
             var fileReader = new FileReader(settings.FilePath);
-            var anagramSolver = new AnagramSolver(fileReader.ReadWords());
+
+            var anagramSolver = new AnagramSolver(fileReader.ReadWords(), settings.AnagramCount);
+
             var anagrams = anagramSolver.FindAnagrams(settings.Word);
-            foreach (string word in anagrams)
-                Console.WriteLine(word);
+
+            userInterface.ShowOutput(anagrams);
         }
     }
 }
