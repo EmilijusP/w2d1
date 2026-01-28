@@ -32,5 +32,13 @@ namespace AnagramSolver.Cli
 
             } while (true);
         }
+
+        public void ShowOutput(IList<string> words)
+        {
+            foreach (string word in words)
+            {
+                Console.WriteLine(word);
+            }
+        }
     }
 }
