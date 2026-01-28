@@ -22,10 +22,22 @@ namespace AnagramSolver.BusinessLogic.Data
 
             foreach (string textLine in textLines)
             {
-                foreach (string word in textLine.Split())
-                {
-                    words.Add(new WordModel { Word = word.ToLower() });
-                }
+                string[] textLineArray = textLine.Split("\t");
+
+                //zodynas.txt => 0     1        2    3
+                //zodynas.txt => lemma wordForm word frequency
+                string lemma = textLineArray[0];
+                string wordForm = textLineArray[1];
+                string word = textLineArray[2];
+                int frequency = Int32.Parse(textLineArray[3]);
+
+                words.Add(new WordModel 
+                { 
+                    Lemma = lemma.ToLower(), 
+                    Form = wordForm.ToLower(), 
+                    Word = word.ToLower(), 
+                    Frequency = frequency 
+                });
             }
 
             return words;

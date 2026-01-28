@@ -1,5 +1,6 @@
 ﻿using AnagramSolver.BusinessLogic.Data;
 using AnagramSolver.Contracts.Interfaces;
+using AnagramSolver.Contracts.Models;
 
 namespace AnagramSolver.BusinessLogic.Services
 {
@@ -15,7 +16,7 @@ namespace AnagramSolver.BusinessLogic.Services
         public IList<string> GetAnagrams(string userWords)
         {
             int wordCount = userWords.Split().Count();
-
+            HashSet<WordModel> wordModels = _wordRepository.GetWords();
 
 
             return new List<string>();
