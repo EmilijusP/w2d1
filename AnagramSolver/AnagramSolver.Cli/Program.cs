@@ -5,18 +5,20 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using AnagramSolver.Cli;
 using AnagramSolver.BusinessLogic.Services;
+using System.Text;
 
+Console.InputEncoding = Encoding.UTF8;
+Console.OutputEncoding = Encoding.UTF8;
 
 
 string jsonPath = "appsettings.json";
 string content = File.ReadAllText(jsonPath);
-AppSettings? settings = JsonSerializer.Deserialize<AppSettings>(content);
-
-var repository = new WordRepository(settings.FilePath);
-var words = repository.GetWords();
+var settings = JsonSerializer.Deserialize<AppSettings>(content);
 var wordsValidation = new InputValidation();
-var userInterface = new UserInterface(settings.MinWordLength, wordsValidation);
-var anagramSolver = new AnagramSolverLogic();
-var userInput = userInterface.ReadInput();
-var anagrams = anagramSolver.GetAnagrams(userInput);
-userInterface.ShowOutput(anagrams);
+var repository = new WordRepository(settings.FilePath);
+var anagramSolver = new AnagramSolverLogic(repository);
+var ui = new UserInterface(settings.MinWordLength, wordsValidation);
+
+var userInput = ui.ReadInput();
+var results = anagramSolver.GetAnagrams(userInput);
+ui.ShowOutput(results);
