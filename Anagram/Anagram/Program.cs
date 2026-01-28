@@ -56,9 +56,10 @@ namespace Namespace
             {
                 var words = new HashSet<string>();
 
-
                 var textLines = new List<string> { };
+
                 textLines = File.ReadAllLines(filePath).ToList();
+
                 foreach (string textLine in textLines)
                 {   
                     foreach (string word in textLine.Split())
@@ -69,6 +70,13 @@ namespace Namespace
 
                 return words.ToList();
             }
+        }
+
+        public class Word
+        {
+            public string? word { get; set; }
+
+            public string? wordForm { get; set; }
         }
 
         public class AnagramSolver(List<string> wordList, int anagramCount)

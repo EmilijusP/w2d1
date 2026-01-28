@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\emilijus.pocius\\source\\repos\\Basics\\Anagram\\Anagram\\Anagram.csproj": {}
+    "C:\\Users\\emilijus.pocius\\source\\repos\\w1d1\\Anagram\\Anagram\\Anagram.csproj": {}
   },
   "projects": {
-    "C:\\Users\\emilijus.pocius\\source\\repos\\Basics\\Anagram\\Anagram\\Anagram.csproj": {
+    "C:\\Users\\emilijus.pocius\\source\\repos\\w1d1\\Anagram\\Anagram\\Anagram.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\emilijus.pocius\\source\\repos\\Basics\\Anagram\\Anagram\\Anagram.csproj",
+        "projectUniqueName": "C:\\Users\\emilijus.pocius\\source\\repos\\w1d1\\Anagram\\Anagram\\Anagram.csproj",
         "projectName": "Anagram",
-        "projectPath": "C:\\Users\\emilijus.pocius\\source\\repos\\Basics\\Anagram\\Anagram\\Anagram.csproj",
+        "projectPath": "C:\\Users\\emilijus.pocius\\source\\repos\\w1d1\\Anagram\\Anagram\\Anagram.csproj",
         "packagesPath": "C:\\Users\\emilijus.pocius\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\emilijus.pocius\\source\\repos\\Basics\\Anagram\\Anagram\\obj\\",
+        "outputPath": "C:\\Users\\emilijus.pocius\\source\\repos\\w1d1\\Anagram\\Anagram\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
