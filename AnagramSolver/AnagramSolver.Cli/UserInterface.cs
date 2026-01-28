@@ -10,7 +10,6 @@ namespace AnagramSolver.Cli
 {
     public class UserInterface
     {
-        public List<string> userWords = new List<string>();
         private readonly int _minWordLength;
         private InputValidation _wordsValidation;
 
@@ -20,7 +19,7 @@ namespace AnagramSolver.Cli
             _wordsValidation = wordsValidation;
         }
 
-        public List<string> ReadInput()
+        public string ReadInput()
         {
             do
             {
@@ -28,13 +27,10 @@ namespace AnagramSolver.Cli
                 var input = Console.ReadLine();
                 if (_wordsValidation.IsValidInput(input, _minWordLength))
                 {
-                    userWords = input.Split().ToList();
-                    break;
+                    return input;
                 }
 
             } while (true);
-
-            return userWords;
         }
     }
 }

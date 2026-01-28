@@ -15,9 +15,8 @@ var words = repository.GetWords();
 
 var wordsValidation = new InputValidation();
 var userInterface = new UserInterface(settings.MinWordLength, wordsValidation);
-settings.userWords = userInterface.ReadInput();
 
-foreach (string word in settings.userWords)
-{
-    Console.WriteLine(word);
-}
+var anagramSolver = new AnagramSolverLogic();
+
+Console.WriteLine(userInterface.ReadInput());
+
