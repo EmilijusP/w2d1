@@ -1,0 +1,16 @@
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\bin\Debug\net8.0\AnagramSolver.BusinessLogic.deps.json
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\bin\Debug\net8.0\AnagramSolver.BusinessLogic.dll
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\bin\Debug\net8.0\AnagramSolver.BusinessLogic.pdb
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\bin\Debug\net8.0\AnagramSolver.Contracts.dll
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\bin\Debug\net8.0\AnagramSolver.Contracts.pdb
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramSolver.BusinessLogic.csproj.AssemblyReference.cache
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramSolver.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramSolver.BusinessLogic.AssemblyInfoInputs.cache
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramSolver.BusinessLogic.AssemblyInfo.cs
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramSolver.BusinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramSolver.BusinessLogic.sourcelink.json
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramS.4022F06B.Up2Date
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramSolver.BusinessLogic.dll
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\refint\AnagramSolver.BusinessLogic.dll
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\AnagramSolver.BusinessLogic.pdb
+C:\Users\emilijus.pocius\source\repos\w1d1\AnagramSolver\AnagramSolver.BusinessLogic\obj\Debug\net8.0\ref\AnagramSolver.BusinessLogic.dll
