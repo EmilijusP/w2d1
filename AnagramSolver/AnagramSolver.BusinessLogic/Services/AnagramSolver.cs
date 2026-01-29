@@ -31,8 +31,8 @@ namespace AnagramSolver.BusinessLogic.Services
             FindKeyCombinations(userCharCount, _anagramCount, 0, possibleKeys, new List<string>(), keyCombinations);
 
             var results = new List<string>();
-            foreach (var combination in keyCombinations)
-                CreateCombinations(combination, 0, new List<string>(), results);
+            foreach (var keyCombination in keyCombinations)
+                CreateCombinations(keyCombination, 0, new List<string>(), results);
             return results;
         }
 
@@ -99,7 +99,7 @@ namespace AnagramSolver.BusinessLogic.Services
                 return;
             }
 
-            if (wordsLeft == 0)
+            else if (wordsLeft == 0)
                 return;
             
             for (int i = startIndex; i < possibleKeys.Count; i++)
@@ -152,19 +152,19 @@ namespace AnagramSolver.BusinessLogic.Services
                 charCountDictionary[character]++;
         }
 
-        private void CreateCombinations(List<string> keys, int index, List<string> currentSentence, List<string> results)
+        private void CreateCombinations(List<string> keyCombination, int index, List<string> currentSentence, List<string> results)
         {
-            if (index == keys.Count)
+            if (index == keyCombination.Count)
             {
                 results.Add(string.Join(" ", currentSentence));
                 return;
             }
 
-            string currentKey = keys[index];
+            string currentKey = keyCombination[index];
             foreach (var wordVariant in _dictionary[currentKey])
             {
                 currentSentence.Add(wordVariant);
-                CreateCombinations(keys, index + 1, currentSentence, results);
+                CreateCombinations(keyCombination, index + 1, currentSentence, results);
                 currentSentence.RemoveAt(currentSentence.Count - 1);
             }
         }
