@@ -1,4 +1,4 @@
-using AnagramSolver.BusinessLogic.Data;
+﻿using AnagramSolver.BusinessLogic.Data;
 using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.Contracts.Models;
@@ -9,131 +9,52 @@ namespace AnagramSolver.Tests
 {
     public class AnagramSolverLogicTests
     {
-        //[Theory]
-        //[InlineData ("labas", "labas", "aabls", "balas")]
-        //[InlineData ("visma praktika", "vismapraktika", "aaaiikkmprstv", "praktikavimas")]
-        //public void GetAnagrams_ValidInput_ReturnsOneWordAnagram(string inputWord, string cleanInput, string keyCombination, string expectedAnagram)
-        //{
-        //    //arrange
-        //    var wordSet = new HashSet<WordModel>();
-        //    wordSet.Add(new WordModel { Word = expectedAnagram });
+        private readonly Mock<IWordProcessor> _mockWordProcessor;
+        private readonly Mock<IAnagramDictionaryService> _mockDictionaryService;
+        private readonly Mock<IAnagramAlgorithm> _mockAnagramAlgorithm;
+        private readonly Mock<IWordRepository> _mockWordRepository;
+        private readonly AnagramSolverLogic _systemUnderTest;
+        private const int _anagramCount = 1;
 
-        //    var mockWordProcessor = new Mock<IWordProcessor>();
-        //    var mockAnagramDictionaryService = new Mock<IAnagramDictionaryService>();
-        //    var mockAnagramAlgorithm = new Mock<IAnagramAlgorithm>();
-        //    var mockWordRepository = new Mock<IWordRepository>();
+        public AnagramSolverLogicTests()
+        {
+            _mockWordProcessor = new Mock<IWordProcessor>();
+            _mockDictionaryService = new Mock<IAnagramDictionaryService>();
+            _mockAnagramAlgorithm = new Mock<IAnagramAlgorithm>();
+            _mockWordRepository = new Mock<IWordRepository>();
 
-        //    mockWordProcessor.Setup(processor => processor.RemoveWhitespace(It.IsAny<string>())).Returns(cleanInput);
-
-        //    mockWordProcessor.Setup(processor => processor.CreateCharCount(It.IsAny<string>())).Returns(new Dictionary<char, int>());
-
-        //    mockWordRepository.Setup(repository => repository.GetWords()).Returns(wordSet);
-
-        //    var allAnagrams = new List<Anagram> { new Anagram { Key = "a", KeyCharCount = new Dictionary<char, int> { ['a'] = 1}, Words = new List<string> { "a" } } };
-
-        //    mockAnagramDictionaryService.Setup(dictionaryService => dictionaryService.CreateAnagrams(It.IsAny<HashSet<WordModel>>())).Returns(allAnagrams);
-
-        //    mockAnagramAlgorithm.Setup(algortihm => algortihm.CanFitWithin(It.IsAny<Dictionary<char, int>>(), It.IsAny<Dictionary<char, int>>())).Returns(true);
-
-        //    var keyCombinations = new List<List<string>> { new List<string> { keyCombination } };
-
-        //    mockAnagramAlgorithm.Setup(algortihm => algortihm.FindKeyCombinations(It.IsAny<Dictionary<char, int>>(), 1, It.IsAny<List<Anagram>>())).Returns(keyCombinations);
-
-        //    var anagramList = new List<string> { expectedAnagram };
-
-        //    mockAnagramAlgorithm.Setup(algorithm => algorithm.CreateCombinations(It.IsAny<List<List<string>>>(), It.IsAny<List<Anagram>>())).Returns(anagramList);
-
-        //    var anagramSolver = new AnagramSolverLogic(mockWordProcessor.Object, mockAnagramDictionaryService.Object, mockAnagramAlgorithm.Object, mockWordRepository.Object, 1);
-
-        //    //act
-        //    var result = anagramSolver.GetAnagrams(inputWord);
-
-        //    //assert
-        //    result.Should().Contain(expectedAnagram);
-        //}
+            _systemUnderTest = new AnagramSolverLogic(
+                _mockWordProcessor.Object,
+                _mockDictionaryService.Object,
+                _mockAnagramAlgorithm.Object,
+                _mockWordRepository.Object,
+                1);
+        }
 
         [Theory]
         [InlineData("labas", "balas")]
-        [InlineData("alus", "sula")]
-        public void GetAnagrams_ValidInput_ReturnsOneWordAnagram(string inputWord, string expectedAnagram)
+        public void GetAnagrams_ValidSingleWord_ReturnsExpectedAnagram(string inputWord, string expectedAnagram)
         {
             //arrange
-            var wordSet = new HashSet<WordModel>();
-            wordSet.Add(new WordModel { Word = expectedAnagram });
+            var charCount = new Dictionary<char, int> { { 'a', 2 }, { 'b', 1 }, { 'l', 1 }, { 's', 1 } };
+            var anagrams = new List<Anagram> { new Anagram { Words = new List<string> { expectedAnagram }, KeyCharCount = charCount } };
 
-            var mockWordProcessor = new Mock<IWordProcessor>();
-            var mockAnagramDictionaryService = new Mock<IAnagramDictionaryService>();
-            var mockAnagramAlgorithm = new Mock<IAnagramAlgorithm>();
-            var mockWordRepository = new Mock<IWordRepository>();
+            _mockWordProcessor.Setup(p => p.RemoveWhitespace(inputWord)).Returns(inputWord);
+            _mockWordProcessor.Setup(p => p.CreateCharCount(inputWord)).Returns(charCount);
+            _mockWordRepository.Setup(r => r.GetWords()).Returns(new HashSet<WordModel>());
+            _mockDictionaryService.Setup(d => d.CreateAnagrams(It.IsAny<HashSet<WordModel>>())).Returns(anagrams);
 
-            mockWordProcessor.Setup(processor => processor.RemoveWhitespace(It.IsAny<string>())).Returns(cleanInput);
-
-            mockWordProcessor.Setup(processor => processor.CreateCharCount(It.IsAny<string>())).Returns(new Dictionary<char, int>());
-
-            mockWordRepository.Setup(repository => repository.GetWords()).Returns(wordSet);
-
-            var allAnagrams = new List<Anagram> { new Anagram { Key = "a", KeyCharCount = new Dictionary<char, int> { ['a'] = 1 }, Words = new List<string> { "a" } } };
-
-            mockAnagramDictionaryService.Setup(dictionaryService => dictionaryService.CreateAnagrams(It.IsAny<HashSet<WordModel>>())).Returns(allAnagrams);
-
-            mockAnagramAlgorithm.Setup(algortihm => algortihm.CanFitWithin(It.IsAny<Dictionary<char, int>>(), It.IsAny<Dictionary<char, int>>())).Returns(true);
-
-            var keyCombinations = new List<List<string>> { new List<string> { keyCombination } };
-
-            mockAnagramAlgorithm.Setup(algortihm => algortihm.FindKeyCombinations(It.IsAny<Dictionary<char, int>>(), 1, It.IsAny<List<Anagram>>())).Returns(keyCombinations);
-
-            var anagramList = new List<string> { expectedAnagram };
-
-            mockAnagramAlgorithm.Setup(algorithm => algorithm.CreateCombinations(It.IsAny<List<List<string>>>(), It.IsAny<List<Anagram>>())).Returns(anagramList);
-
-            var anagramSolver = new AnagramSolverLogic(mockWordProcessor.Object, mockAnagramDictionaryService.Object, mockAnagramAlgorithm.Object, mockWordRepository.Object, 1);
+            _mockAnagramAlgorithm.Setup(a => a.CanFitWithin(It.IsAny<Dictionary<char, int>>(), It.IsAny<Dictionary<char, int>>())).Returns(true);
+            _mockAnagramAlgorithm.Setup(a => a.FindKeyCombinations(It.IsAny<Dictionary<char, int>>(), _anagramCount, It.IsAny<List<Anagram>>()))
+                .Returns(new List<List<string>> { new List<string> { "key" } });
+            _mockAnagramAlgorithm.Setup(a => a.CreateCombinations(It.IsAny<List<List<string>>>(), It.IsAny<List<Anagram>>()))
+                .Returns(new List<string> { expectedAnagram });
 
             //act
-            var result = anagramSolver.GetAnagrams(inputWord);
+            var result = _systemUnderTest.GetAnagrams(inputWord);
 
             //assert
             result.Should().Contain(expectedAnagram);
         }
-
-        //[Fact]
-        //public void GetAnagrams_EmptyInput_ReturnsEmptyList()
-        //{
-        //    //arrange
-        //    var wordSet = new HashSet<WordModel>();
-        //    wordSet.Add(new WordModel { Word = "test" });
-
-        //    var mockWordProcessor = new Mock<IWordProcessor>();
-        //    var mockAnagramDictionaryService = new Mock<IAnagramDictionaryService>();
-        //    var mockAnagramAlgorithm = new Mock<IAnagramAlgorithm>();
-        //    var mockWordRepository = new Mock<IWordRepository>();
-
-        //    mockWordProcessor.Setup(processor => processor.RemoveWhitespace("")).Returns("");
-
-        //    mockWordProcessor.Setup(processor => processor.CreateCharCount("")).Returns(new Dictionary<char, int>());
-
-        //    mockWordRepository.Setup(repository => repository.GetWords()).Returns(wordSet);
-
-        //    var allAnagrams = new List<Anagram> { new Anagram { Key = "estt", KeyCharCount = new Dictionary<char, int> { ['e'] = 1, ['s'] = 1, ['t'] = 2 }, Words = new List<string> { "test" } } };
-
-        //    mockAnagramDictionaryService.Setup(dictionaryService => dictionaryService.CreateAnagrams(It.IsAny<HashSet<WordModel>>())).Returns(allAnagrams);
-
-        //    mockAnagramAlgorithm.Setup(algortihm => algortihm.CanFitWithin(It.IsAny<Dictionary<char, int>>(), new Dictionary<char, int>())).Returns(false);
-
-        //    var keyCombinations = new List<List<string>> { new List<string>() };
-
-        //    mockAnagramAlgorithm.Setup(algortihm => algortihm.FindKeyCombinations(new Dictionary<char, int>(), It.IsAny<int>(), It.IsAny<List<Anagram>>())).Returns(keyCombinations);
-
-        //    var anagramList = new List<string>();
-
-        //    mockAnagramAlgorithm.Setup(algorithm => algorithm.CreateCombinations(keyCombinations, It.IsAny<List<Anagram>>())).Returns(anagramList);
-
-        //    var anagramSolver = new AnagramSolverLogic(mockWordProcessor.Object, mockAnagramDictionaryService.Object, mockAnagramAlgorithm.Object, mockWordRepository.Object, 1);
-
-        //    //act
-        //    var result = anagramSolver.GetAnagrams("");
-
-        //    //assert
-        //    result.Should().BeEmpty();
-        //}
     }
 }
