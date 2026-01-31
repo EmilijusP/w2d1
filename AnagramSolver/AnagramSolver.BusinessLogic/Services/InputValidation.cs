@@ -14,7 +14,7 @@ namespace AnagramSolver.BusinessLogic.Services
                 return false;
 
             bool isValid = true;
-            var words = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var words = input.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 
                 if (words.Length == 0)
                 return false;
