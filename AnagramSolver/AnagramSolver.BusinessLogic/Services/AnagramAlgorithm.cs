@@ -113,10 +113,7 @@ namespace AnagramSolver.BusinessLogic.Services
 
         public bool IsValidOutputLength(string key, int minOutputWordLength)
         {
-            if (key.Length < minOutputWordLength)
-                return false;
-
-            return true;
+            return key.Length >= minOutputWordLength;
         }
     }
 }
