@@ -17,7 +17,7 @@ var settings = JsonSerializer.Deserialize<AppSettings>(content);
 
 var wordsValidation = new InputValidation();
 
-var wordRepository = new WordRepository(settings.FilePath);
+var wordRepository = new FileWordRepository(settings.FilePath);
 
 var wordProcessor = new WordProcessor();
 

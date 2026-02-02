@@ -41,11 +41,11 @@ namespace AnagramSolver.BusinessLogic.Services
             }
             else
             {
-                dictionary[key] = CreateNewAnagramInstance(key, word);
+                CreateNewAnagramInstance(dictionary, key, word);
             }
         }
 
-        private Anagram CreateNewAnagramInstance(string key, string word)
+        private void CreateNewAnagramInstance(Dictionary<string, Anagram> dictionary, string key, string word)
         {
             var anagram = new Anagram
             {
@@ -54,7 +54,8 @@ namespace AnagramSolver.BusinessLogic.Services
                 Words = new List<string> { word }
             };
 
-            return anagram;
+            dictionary[key] = anagram;
+
         }
     }
 }

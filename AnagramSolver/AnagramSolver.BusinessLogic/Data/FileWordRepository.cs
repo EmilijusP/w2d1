@@ -3,11 +3,11 @@ using AnagramSolver.Contracts.Models;
 
 namespace AnagramSolver.BusinessLogic.Data
 {
-    public class WordRepository : IWordRepository
+    public class FileWordRepository : IWordRepository
     {
         private readonly string _filePath;
 
-        public WordRepository(string filePath)
+        public FileWordRepository(string filePath)
         {
             _filePath = filePath;
         }
