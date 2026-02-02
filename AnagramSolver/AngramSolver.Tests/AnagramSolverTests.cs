@@ -15,6 +15,7 @@ namespace AnagramSolver.Tests
         private readonly Mock<IWordRepository> _mockWordRepository;
         private readonly AnagramSolverLogic _systemUnderTest;
         private const int _anagramCount = 1;
+        private const int _minOutputWordsLength = 2;
 
         public AnagramSolverTests()
         {
@@ -28,7 +29,9 @@ namespace AnagramSolver.Tests
                 _mockDictionaryService.Object,
                 _mockAnagramAlgorithm.Object,
                 _mockWordRepository.Object,
-                1);
+                _anagramCount,
+                _minOutputWordsLength
+                );
         }
 
         [Theory]
@@ -43,7 +46,7 @@ namespace AnagramSolver.Tests
             _mockWordProcessor.Setup(p => p.CreateCharCount(inputWord)).Returns(charCount);
             _mockWordRepository.Setup(r => r.GetWords()).Returns(new HashSet<WordModel>());
             _mockDictionaryService.Setup(d => d.CreateAnagrams(It.IsAny<HashSet<WordModel>>())).Returns(anagrams);
-
+            _mockAnagramAlgorithm.Setup(a => a.IsValidOutputLength(It.IsAny<string>(), _minOutputWordsLength)).Returns(true);
             _mockAnagramAlgorithm.Setup(a => a.CanFitWithin(It.IsAny<Dictionary<char, int>>(), It.IsAny<Dictionary<char, int>>())).Returns(true);
             _mockAnagramAlgorithm.Setup(a => a.FindKeyCombinations(It.IsAny<Dictionary<char, int>>(), _anagramCount, It.IsAny<List<Anagram>>()))
                 .Returns(new List<List<string>> { new List<string> { "key" } });
