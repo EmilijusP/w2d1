@@ -1,4 +1,5 @@
-﻿using AnagramSolver.Contracts.Interfaces;
+﻿using AnagramSolver.BusinessLogic.Services;
+using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.Contracts.Models;
 
 namespace AnagramSolver.BusinessLogic.Data
@@ -22,7 +23,11 @@ namespace AnagramSolver.BusinessLogic.Data
 
             foreach (string textLine in textLines)
             {
+                if (string.IsNullOrEmpty(textLine)) continue;
+
                 string[] textLineArray = textLine.Split("\t");
+
+                if (textLineArray.Length < 4) continue;
 
                 //zodynas.txt => 0     1        2    3
                 //zodynas.txt => lemma wordForm word frequency
@@ -41,6 +46,12 @@ namespace AnagramSolver.BusinessLogic.Data
             }
 
             return words;
+        }
+
+        public void WriteToFile(WordModel wordModel)
+        {
+            var line = new List<string> { $"{wordModel.Lemma}\t{wordModel.Form}\t{wordModel.Word}\t{wordModel.Frequency}" };
+            File.AppendAllLines(_filePath, line);
         }
     }
 }

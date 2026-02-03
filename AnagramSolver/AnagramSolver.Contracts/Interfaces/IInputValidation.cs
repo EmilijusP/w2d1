@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace AnagramSolver.Contracts.Interfaces
 {
-    public interface IAnagramDictionaryService
+    public interface IInputValidation
     {
-        List<Anagram> CreateAnagrams(HashSet<WordModel> wordModels);
+        bool IsValidUserInput(string input, int minWordLength);
 
-        bool AddWord(string wordToAdd);
-
+        bool IsValidWriteToFileInput(WordModel wordModel);
     }
-
 }

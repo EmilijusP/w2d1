@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AnagramSolver.Contracts.Interfaces;
+using AnagramSolver.Contracts.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace AnagramSolver.BusinessLogic.Services
 {
-    public class InputValidation
+    public class InputValidation : IInputValidation
     {
-        public bool IsValidInput(string input, int minWordLength)
+        public bool IsValidUserInput(string input, int minWordLength)
         {
             if (string.IsNullOrEmpty(input))
                 return false;
@@ -29,6 +31,26 @@ namespace AnagramSolver.BusinessLogic.Services
             }
 
             return isValid;
+        }
+
+        public bool IsValidWriteToFileInput(WordModel wordModel)
+        {
+            var lemma = wordModel.Lemma;
+            var form = wordModel.Form;
+            var word = wordModel.Word;
+            var frequency = wordModel.Frequency;
+
+            if (string.IsNullOrEmpty(word))
+            {
+                return false;
+            }
+
+            if (word.Trim().Any(c => char.IsWhiteSpace(c)))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

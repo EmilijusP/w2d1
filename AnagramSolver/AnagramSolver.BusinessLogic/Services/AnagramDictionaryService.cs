@@ -2,16 +2,21 @@
 using AnagramSolver.Contracts.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 
 namespace AnagramSolver.BusinessLogic.Services
 {
     public class AnagramDictionaryService : IAnagramDictionaryService
     {
         private readonly IWordProcessor _wordProcessor;
+        private readonly IWordRepository _wordRepository;
+        private readonly IInputValidation _inputValidation;
 
-        public AnagramDictionaryService(IWordProcessor wordProcessor)
+        public AnagramDictionaryService(IWordProcessor wordProcessor, IWordRepository wordRepository, IInputValidation inputValidation)
         {
             _wordProcessor = wordProcessor;
+            _wordRepository = wordRepository;
+            _inputValidation = inputValidation;
         }
 
         public List<Anagram> CreateAnagrams(HashSet<WordModel> wordModels)
@@ -56,6 +61,22 @@ namespace AnagramSolver.BusinessLogic.Services
 
             dictionary[key] = anagram;
 
+        }
+
+        public bool AddWord(string word)
+        {
+            var wordsSet = _wordRepository.GetWords();
+            var wordModel = new WordModel { Word = word };
+            if (wordsSet.Any(x => x.Word == word) || !_inputValidation.IsValidWriteToFileInput(wordModel))
+            {
+                return false;
+            }
+
+            else
+            {
+                _wordRepository.WriteToFile(wordModel);
+                return true;
+            }
         }
     }
 }

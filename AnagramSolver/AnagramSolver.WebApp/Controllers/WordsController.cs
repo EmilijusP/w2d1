@@ -1,18 +1,22 @@
 ﻿using AnagramSolver.BusinessLogic.Data;
+using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.Contracts.Models;
 using AnagramSolver.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace AnagramSolver.WebApp.Controllers
 {
     public class WordsController : Controller
     {
         private readonly IWordRepository _wordRepository;
+        private readonly IAnagramDictionaryService _anagramDictionaryService;
 
-        public WordsController(IWordRepository wordRepository)
+        public WordsController(IWordRepository wordRepository, IAnagramDictionaryService anagramDictionaryService)
         {
             _wordRepository = wordRepository;
+            _anagramDictionaryService = anagramDictionaryService;
         }
 
         public IActionResult Index(int page = 1)
@@ -45,7 +49,7 @@ namespace AnagramSolver.WebApp.Controllers
 
         public IActionResult Create(string? word)
         {
-
+            bool isAdded = _anagramDictionaryService.AddWord(word);
             return View((object)word);
         }
     }

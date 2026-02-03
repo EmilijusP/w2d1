@@ -29,7 +29,7 @@ public class InputValidationTests
         //arrange
 
         //act
-        var result = _inputValidation.IsValidInput(input, minWordLength);
+        var result = _inputValidation.IsValidUserInput(input, minWordLength);
 
         //assert
         result.Should().Be(expectedOutput);

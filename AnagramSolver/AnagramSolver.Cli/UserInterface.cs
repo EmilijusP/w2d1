@@ -25,7 +25,7 @@ namespace AnagramSolver.Cli
             {
                 Console.WriteLine($"Enter the word/words containing {_minInputWordLength} letters or more: ");
                 var input = Console.ReadLine();
-                if (_inputValidation.IsValidInput(input, _minInputWordLength))
+                if (_inputValidation.IsValidUserInput(input, _minInputWordLength))
                 {
                     return input;
                 }
