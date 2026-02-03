@@ -11,10 +11,12 @@ namespace AnagramSolver.BusinessLogic.Services
     public class InputValidation : IInputValidation
     {
         private readonly IWordRepository _wordRepository;
+        private readonly IWordProcessor _wordProcessor;
 
-        public InputValidation(IWordRepository wordRepository)
+        public InputValidation(IWordRepository wordRepository, IWordProcessor wordProcessor)
         {
             _wordRepository = wordRepository;
+            _wordProcessor = wordProcessor;
         }
 
         public bool IsValidUserInput(string input, int minWordLength)
@@ -57,7 +59,7 @@ namespace AnagramSolver.BusinessLogic.Services
                 return false;
             }
 
-            if (_wordRepository.GetWords().Any(model => model.Word == word))
+            if (_wordRepository.GetWords().Any(model => model.Word == _wordProcessor.RemoveWhitespace(word).ToLower()))
             {
                 return false;
             }

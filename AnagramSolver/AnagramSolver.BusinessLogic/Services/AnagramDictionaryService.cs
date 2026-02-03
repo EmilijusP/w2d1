@@ -67,7 +67,7 @@ namespace AnagramSolver.BusinessLogic.Services
         {
             var wordsSet = _wordRepository.GetWords();
             var wordModel = new WordModel { Word = word };
-            if (wordsSet.Any(x => x.Word == _wordProcessor.RemoveWhitespace(word).ToLower()) || !_inputValidation.IsValidWriteToFileInput(wordModel))
+            if (!_inputValidation.IsValidWriteToFileInput(wordModel))
             {
                 return false;
             }
