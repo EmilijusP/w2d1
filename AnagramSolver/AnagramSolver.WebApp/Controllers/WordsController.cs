@@ -36,5 +36,17 @@ namespace AnagramSolver.WebApp.Controllers
 
             return View(paginationViewModel);
         }
+
+        public IActionResult New()
+        {
+
+            return View();
+        }
+
+        public IActionResult Create(string? word)
+        {
+
+            return View((object)word);
+        }
     }
 }

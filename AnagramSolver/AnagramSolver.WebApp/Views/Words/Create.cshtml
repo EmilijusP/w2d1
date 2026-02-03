@@ -1,0 +1,19 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Add New Word";
+}
+
+<div class="text-center">
+    <h1>Pridėti naują žodį į žodyną.</h1>
+    @{
+        if (string.IsNullOrEmpty(Model))
+        {
+            <h2>Klaida. Žodis nepridėtas.</h2>
+        }
+        else
+        {
+            <h2>"@(Model)" pridėta į žodyną.</h2>
+        }
+    }
+</div>

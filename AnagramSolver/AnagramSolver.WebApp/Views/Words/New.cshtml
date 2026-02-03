@@ -1,0 +1,11 @@
+﻿@{
+        ViewData["Title"] = "Add New Word";
+}
+
+<div class="text-center">
+    <h1>Pridėti naują žodį į žodyną.</h1>
+    <form asp-controller="Words" asp-action="Create" method="post">
+        <input type="text" name="word" placeholder="Įveskite žodį"/>
+        <button type="submit">Pridėti</button>
+    </form>
+</div>
