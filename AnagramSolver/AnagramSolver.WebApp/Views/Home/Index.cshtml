@@ -13,7 +13,12 @@
         <button type="submit">Ieškoti</button>
     </form>
 
-    <ul style="list-style: none">
+    @if (Model.AnagramLines.Any())
+    {
+        <h2>Anagrams for "@Model.Word"</h2>
+    }
+
+    <ul>
         @foreach (var anagram in Model.AnagramLines)
         {
             <li>@anagram</li>

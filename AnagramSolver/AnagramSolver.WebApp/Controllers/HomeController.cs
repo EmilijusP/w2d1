@@ -24,7 +24,11 @@ namespace AnagramSolver.WebApp.Controllers
             if (!string.IsNullOrEmpty(id))
             {
                 var anagrams = _anagramSolver.GetAnagrams(id);
-                anagramViewModel = new AnagramViewModel { AnagramLines = anagrams };
+                anagramViewModel = new AnagramViewModel 
+                { 
+                    Word = id,
+                    AnagramLines = anagrams 
+                };
             }
 
             return View(anagramViewModel);
