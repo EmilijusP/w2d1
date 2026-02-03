@@ -43,9 +43,8 @@ namespace AnagramSolver.BusinessLogic.Services
 
             var result = new string(stringToProcess.Where(c => !char.IsWhiteSpace(c)).ToArray());
 
-            return result;
+            return result.ToLower();
         }
 
-        
     }
 }
