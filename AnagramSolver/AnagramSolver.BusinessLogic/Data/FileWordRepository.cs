@@ -13,13 +13,11 @@ namespace AnagramSolver.BusinessLogic.Data
             _filePath = filePath;
         }
 
-        public HashSet<WordModel> GetWords()
+        public async Task<HashSet<WordModel>> ReadAllLinesAsync(CancellationToken ct)
         {
             var words = new HashSet<WordModel>();
 
-            var textLines = new List<string>();
-
-            textLines = File.ReadAllLines(_filePath).ToList();
+            string[] textLines = await File.ReadAllLinesAsync(_filePath, ct);
 
             foreach (string textLine in textLines)
             {
@@ -48,10 +46,10 @@ namespace AnagramSolver.BusinessLogic.Data
             return words;
         }
 
-        public void WriteToFile(WordModel wordModel)
+        public async Task WriteToFileAsync(WordModel wordModel, CancellationToken ct)
         {
             var line = new List<string> { $"{wordModel.Lemma}\t{wordModel.Form}\t{wordModel.Word}\t{wordModel.Frequency}" };
-            File.AppendAllLines(_filePath, line);
+            await File.AppendAllLinesAsync(_filePath, line, ct);
         }
     }
 }

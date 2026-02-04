@@ -4,8 +4,8 @@ namespace AnagramSolver.Contracts.Interfaces
 {
     public interface IWordRepository
     {
-        HashSet<WordModel> GetWords();
+        Task<HashSet<WordModel>> ReadAllLinesAsync(CancellationToken ct = default);
 
-        void WriteToFile(WordModel wordModel);
+        Task WriteToFileAsync(WordModel wordModel, CancellationToken ct = default);
     }
 }

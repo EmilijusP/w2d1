@@ -23,7 +23,7 @@ namespace AnagramSolver.WebApp.Controllers
         {
             var pageSize = 100;
 
-            var allItems = _wordRepository.GetWords().Select(wordModel => wordModel.Word).ToList();
+            var allItems = _wordRepository.ReadAllLinesAsync().Select(wordModel => wordModel.Word).ToList();
 
             var items = allItems.Skip((page - 1) * pageSize).Take(pageSize);
 

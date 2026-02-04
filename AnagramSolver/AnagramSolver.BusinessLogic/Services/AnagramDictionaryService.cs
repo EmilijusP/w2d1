@@ -74,7 +74,7 @@ namespace AnagramSolver.BusinessLogic.Services
             else
             {
                 wordModel.Word = _wordProcessor.RemoveWhitespace(wordModel.Word).ToLower();
-                _wordRepository.WriteToFile(wordModel);
+                _wordRepository.WriteToFileAsync(wordModel);
                 return true;
             }
         }

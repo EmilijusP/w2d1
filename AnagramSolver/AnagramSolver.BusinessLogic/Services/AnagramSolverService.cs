@@ -39,7 +39,7 @@ namespace AnagramSolver.BusinessLogic.Services
 
             var inputCharCount = _wordProcessor.CreateCharCount(cleanInput);
 
-            var wordSet = _wordRepository.GetWords();
+            var wordSet = _wordRepository.ReadAllLinesAsync();
 
             var allAnagrams = _anagramDictonaryService.CreateAnagrams(wordSet);
 

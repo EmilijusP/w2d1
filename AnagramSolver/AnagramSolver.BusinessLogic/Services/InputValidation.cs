@@ -59,7 +59,7 @@ namespace AnagramSolver.BusinessLogic.Services
                 return false;
             }
 
-            if (_wordRepository.GetWords().Any(model => model.Word == _wordProcessor.RemoveWhitespace(word).ToLower()))
+            if (_wordRepository.ReadAllLinesAsync().Any(model => model.Word == _wordProcessor.RemoveWhitespace(word).ToLower()))
             {
                 return false;
             }

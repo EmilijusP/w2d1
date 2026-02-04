@@ -44,7 +44,7 @@ namespace AnagramSolver.Tests
 
             _mockWordProcessor.Setup(p => p.RemoveWhitespace(inputWord)).Returns(inputWord);
             _mockWordProcessor.Setup(p => p.CreateCharCount(inputWord)).Returns(charCount);
-            _mockWordRepository.Setup(r => r.GetWords()).Returns(new HashSet<WordModel>());
+            _mockWordRepository.Setup(r => r.ReadAllLinesAsync()).Returns(new HashSet<WordModel>());
             _mockDictionaryService.Setup(d => d.CreateAnagrams(It.IsAny<HashSet<WordModel>>())).Returns(anagrams);
             _mockAnagramAlgorithm.Setup(a => a.IsValidOutputLength(It.IsAny<string>(), _minOutputWordsLength)).Returns(true);
             _mockAnagramAlgorithm.Setup(a => a.CanFitWithin(It.IsAny<Dictionary<char, int>>(), It.IsAny<Dictionary<char, int>>())).Returns(true);
