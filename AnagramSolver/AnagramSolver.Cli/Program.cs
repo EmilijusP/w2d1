@@ -10,8 +10,14 @@ using System.Text;
 Console.InputEncoding = Encoding.UTF8;
 Console.OutputEncoding = Encoding.UTF8;
 
+using var cts = new CancellationTokenSource();
+Console.CancelKeyPress += (s, e) => {
+    e.Cancel = true;
+    cts.Cancel();
+};
+
 string jsonPath = "appsettings.json";
-string content = File.ReadAllText(jsonPath);
+string content = await File.ReadAllTextAsync(jsonPath);
 
 var settings = JsonSerializer.Deserialize<AppSettings>(content);
 
@@ -30,5 +36,5 @@ var anagramSolver = new AnagramSolverService(wordProcessor, anagramDictionary, a
 var ui = new UserInterface(settings.MinInputWordsLength, inputValidation);
 
 var userInput = ui.ReadInput();
-var results = anagramSolver.GetAnagrams(userInput);
+var results = await anagramSolver.GetAnagramsAsync(userInput, cts.Token);
 ui.ShowOutput(results);

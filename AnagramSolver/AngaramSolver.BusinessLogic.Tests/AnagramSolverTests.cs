@@ -36,7 +36,7 @@ namespace AnagramSolver.Tests
 
         [Theory]
         [InlineData("labas", "balas")]
-        public void GetAnagrams_ValidSingleWord_ReturnsExpectedAnagram(string inputWord, string expectedAnagram)
+        public async Task GetAnagramsAsync_ValidSingleWord_ReturnsExpectedAnagram(string inputWord, string expectedAnagram)
         {
             //arrange
             var charCount = new Dictionary<char, int> { { 'a', 2 }, { 'b', 1 }, { 'l', 1 }, { 's', 1 } };
@@ -44,7 +44,7 @@ namespace AnagramSolver.Tests
 
             _mockWordProcessor.Setup(p => p.RemoveWhitespace(inputWord)).Returns(inputWord);
             _mockWordProcessor.Setup(p => p.CreateCharCount(inputWord)).Returns(charCount);
-            _mockWordRepository.Setup(r => r.ReadAllLinesAsync()).Returns(new HashSet<WordModel>());
+            _mockWordRepository.Setup(r => r.ReadAllLinesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(new HashSet<WordModel>());
             _mockDictionaryService.Setup(d => d.CreateAnagrams(It.IsAny<HashSet<WordModel>>())).Returns(anagrams);
             _mockAnagramAlgorithm.Setup(a => a.IsValidOutputLength(It.IsAny<string>(), _minOutputWordsLength)).Returns(true);
             _mockAnagramAlgorithm.Setup(a => a.CanFitWithin(It.IsAny<Dictionary<char, int>>(), It.IsAny<Dictionary<char, int>>())).Returns(true);
@@ -54,7 +54,7 @@ namespace AnagramSolver.Tests
                 .Returns(new List<string> { expectedAnagram });
 
             //act
-            var result = _systemUnderTest.GetAnagrams(inputWord);
+            var result = await _systemUnderTest.GetAnagramsAsync(inputWord, CancellationToken.None);
 
             //assert
             result.Should().Contain(expectedAnagram);

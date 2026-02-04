@@ -33,7 +33,7 @@ namespace AnagramSolver.Cli
             } while (true);
         }
 
-        public void ShowOutput(IList<string> words)
+        public void ShowOutput(IEnumerable<string> words)
         {
             foreach (string word in words)
             {

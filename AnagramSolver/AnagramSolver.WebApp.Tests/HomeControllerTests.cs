@@ -25,17 +25,17 @@ namespace AnagramSolver.WebApp.Tests
         [Theory]
         [InlineData("test", "sett")]
         [InlineData("testing", null)]
-        public void Index_VariousWords_ReturnsPossibleAnagrams(string id, string expectedAnagram)
+        public async Task Index_VariousWords_ReturnsPossibleAnagrams(string id, string expectedAnagram)
         {
             //arrange
             var expectedResult = expectedAnagram == null 
                 ? new List<string>() 
                 : new List<string> { expectedAnagram };
 
-            _mockAnagramSolver.Setup(s => s.GetAnagrams(id)).Returns(expectedResult);
+            _mockAnagramSolver.Setup(s => s.GetAnagramsAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync(expectedResult);
 
             //act
-            var result = _homeController.Index(id);
+            var result = await _homeController.Index(id, CancellationToken.None);
 
             //assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -47,15 +47,15 @@ namespace AnagramSolver.WebApp.Tests
         }
 
         [Fact]
-        public void Index_EmptyId_DoesNotCallService()
+        public async Task Index_EmptyId_DoesNotCallService()
         {
             //arrange
 
             //act
-            var result = _homeController.Index("");
+            var result = await _homeController.Index("", CancellationToken.None);
 
             //assert
-            _mockAnagramSolver.Verify(s => s.GetAnagrams(It.IsAny<string>()), Times.Never);
+            _mockAnagramSolver.Verify(s => s.GetAnagramsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
