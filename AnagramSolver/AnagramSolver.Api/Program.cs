@@ -17,17 +17,7 @@ builder.Services.AddScoped<IAnagramDictionaryService, AnagramDictionaryService>(
 builder.Services.AddScoped<IAnagramAlgorithm, AnagramAlgorithm>();
 builder.Services.AddScoped<IWordRepository>(sp => new FileWordRepository(settings.FilePath));
 builder.Services.AddScoped<IInputValidation, InputValidation>();
-builder.Services.AddScoped<IAnagramSolver, AnagramSolverService>
-    (sp => new AnagramSolverService
-        (
-            sp.GetRequiredService<IWordProcessor>(),
-            sp.GetRequiredService<IAnagramDictionaryService>(),
-            sp.GetRequiredService<IAnagramAlgorithm>(),
-            sp.GetRequiredService<IWordRepository>(),
-            settings.AnagramCount,
-            settings.MinOutputWordsLength
-        )
-    );
+builder.Services.AddScoped<IAnagramSolver, AnagramSolverService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

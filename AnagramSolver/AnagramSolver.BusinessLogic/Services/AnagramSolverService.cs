@@ -13,24 +13,21 @@ namespace AnagramSolver.BusinessLogic.Services
         private readonly IAnagramDictionaryService _anagramDictonaryService;
         private readonly IAnagramAlgorithm _anagramAlgorithm;
         private readonly IWordRepository _wordRepository;
-        private readonly int _anagramCount;
-        private readonly int _minOutputWordsLength;
+        private readonly AppSettings _settings;
 
         public AnagramSolverService(
             IWordProcessor wordProcessor,
             IAnagramDictionaryService anagramDictionaryService,
             IAnagramAlgorithm anagramAlgorithm,
             IWordRepository wordRepository,
-            int anagramCount,
-            int minOutputWordsLength
+            AppSettings settings
             )
         {
             _wordProcessor = wordProcessor;
             _anagramDictonaryService = anagramDictionaryService;
             _anagramAlgorithm = anagramAlgorithm;
             _wordRepository = wordRepository;
-            _anagramCount = anagramCount;
-            _minOutputWordsLength = minOutputWordsLength;
+            _settings = settings;
         }
 
         public async Task<IEnumerable<string>> GetAnagramsAsync(string userWords, CancellationToken ct)
@@ -43,11 +40,11 @@ namespace AnagramSolver.BusinessLogic.Services
 
             var allAnagrams = _anagramDictonaryService.CreateAnagrams(wordSet);
 
-            var filteredAnagrams = allAnagrams.Where(key => _anagramAlgorithm.IsValidOutputLength(key.Key, _minOutputWordsLength));
+            var filteredAnagrams = allAnagrams.Where(key => _anagramAlgorithm.IsValidOutputLength(key.Key, _settings.MinOutputWordsLength));
             
             var possibleAnagrams = filteredAnagrams.Where(key => _anagramAlgorithm.CanFitWithin(key.KeyCharCount, inputCharCount)).ToList();
 
-            var keyCombinations = _anagramAlgorithm.FindKeyCombinations(inputCharCount, _anagramCount, possibleAnagrams);
+            var keyCombinations = _anagramAlgorithm.FindKeyCombinations(inputCharCount, _settings.AnagramCount, possibleAnagrams);
 
             var anagramList = _anagramAlgorithm.CreateCombinations(keyCombinations, possibleAnagrams);
 
