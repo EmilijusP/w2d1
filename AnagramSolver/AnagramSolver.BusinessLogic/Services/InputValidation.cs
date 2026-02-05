@@ -22,24 +22,26 @@ namespace AnagramSolver.BusinessLogic.Services
         public bool IsValidUserInput(string input, int minWordLength)
         {
             if (string.IsNullOrEmpty(input))
+            {
                 return false;
+            }
 
-            bool isValid = true;
             var words = input.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 
-                if (words.Length == 0)
+            if (words.Length == 0)
+            {
                 return false;
+            }
 
             foreach (string word in words)
             {
                 if (word.Length < minWordLength)
                 {
-                    isValid = false;
-                    break;
+                    return false;
                 }
             }
 
-            return isValid;
+            return true;
         }
 
         public async Task<bool> IsValidWriteToFileInputAsync(WordModel wordModel, CancellationToken ct)

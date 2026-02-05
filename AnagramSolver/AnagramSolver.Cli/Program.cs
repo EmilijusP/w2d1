@@ -24,10 +24,19 @@ var userInput = ui.ReadInput();
 
 var response = await client.GetAsync($"api/anagrams/{userInput}", cts.Token);
 
-response.EnsureSuccessStatusCode();
+if (response.IsSuccessStatusCode)
+{
+    response.EnsureSuccessStatusCode();
 
-var json = await response.Content.ReadAsStringAsync();
+    var json = await response.Content.ReadAsStringAsync();
 
-var anagrams = JsonSerializer.Deserialize<List<string>>(json);
+    var anagrams = JsonSerializer.Deserialize<List<string>>(json);
 
-ui.ShowOutput(anagrams);
+    ui.ShowOutput(anagrams);
+}
+
+else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+{
+    var message = await response.Content.ReadAsStringAsync();
+    ui.ShowOutput(new List<string> { message });
+}

@@ -21,12 +21,12 @@ namespace AnagramSolver.Api.Controllers
         }
 
         // GET api/<AnagramsController>/5
-        [HttpGet("{word}")]
-        public async Task<ActionResult<IEnumerable<string>>> Get(string word, CancellationToken ct = default)
+        [HttpGet("{word?}")]
+        public async Task<ActionResult<IEnumerable<string>>> GetAsync(string? word, CancellationToken ct = default)
         {
             if (!_inputValidation.IsValidUserInput(word, _settings.MinInputWordsLength))
             {
-                return BadRequest("Netinkama įvestis.");
+                return BadRequest($"Netinkama įvestis. Žodžiai turi turėti {_settings.MinInputWordsLength} arba daugiau raidžių.");
             }
             
             var results = await _anagramSolver.GetAnagramsAsync(word, ct);
