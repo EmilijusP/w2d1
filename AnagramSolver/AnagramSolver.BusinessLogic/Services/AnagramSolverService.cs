@@ -10,7 +10,7 @@ namespace AnagramSolver.BusinessLogic.Services
     public class AnagramSolverService: IAnagramSolver
     {
         private readonly IWordProcessor _wordProcessor;
-        private readonly IAnagramDictionaryService _anagramDictonaryService;
+        private readonly IAnagramDictionaryService _anagramDictionaryService;
         private readonly IAnagramAlgorithm _anagramAlgorithm;
         private readonly IWordRepository _wordRepository;
         private readonly AppSettings _settings;
@@ -24,7 +24,7 @@ namespace AnagramSolver.BusinessLogic.Services
             )
         {
             _wordProcessor = wordProcessor;
-            _anagramDictonaryService = anagramDictionaryService;
+            _anagramDictionaryService = anagramDictionaryService;
             _anagramAlgorithm = anagramAlgorithm;
             _wordRepository = wordRepository;
             _settings = settings;
