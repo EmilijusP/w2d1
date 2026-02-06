@@ -11,11 +11,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 var settings = builder.Configuration.GetSection("Settings").Get<AppSettings>();
-builder.Services.AddScoped<AppSettings>(settings);
+builder.Services.AddSingleton<AppSettings>(settings);
 builder.Services.AddScoped<IWordProcessor, WordProcessor>();
 builder.Services.AddScoped<IAnagramDictionaryService, AnagramDictionaryService>();
 builder.Services.AddScoped<IAnagramAlgorithm, AnagramAlgorithm>();
-builder.Services.AddScoped<IWordRepository>(sp => new FileWordRepository(settings.FilePath));
+builder.Services.AddScoped<IWordRepository, FileWordRepository>();
 builder.Services.AddScoped<IInputValidation, InputValidation>();
 builder.Services.AddScoped<IAnagramSolver, AnagramSolverService>();
 
