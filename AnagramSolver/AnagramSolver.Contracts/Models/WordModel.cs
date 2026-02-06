@@ -2,6 +2,8 @@
 {
     public class WordModel
     {
+        public int Id { get; set; }
+
         public string? Lemma { get; set; } = "-";
 
         public string? Form { get; set; } = "-";

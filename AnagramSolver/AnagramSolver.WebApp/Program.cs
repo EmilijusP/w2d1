@@ -15,17 +15,7 @@ builder.Services.AddScoped<IWordRepository>(sp => new FileWordRepository(setting
 builder.Services.AddScoped<IWordProcessor, WordProcessor>();
 builder.Services.AddScoped<IAnagramDictionaryService, AnagramDictionaryService>();
 builder.Services.AddScoped<IAnagramAlgorithm, AnagramAlgorithm>();
-builder.Services.AddScoped<IAnagramSolver>
-    (sp => new AnagramSolverService
-        (
-            sp.GetRequiredService<IWordProcessor>(), 
-            sp.GetRequiredService<IAnagramDictionaryService>(),
-            sp.GetRequiredService<IAnagramAlgorithm>(),
-            sp.GetRequiredService<IWordRepository>(),
-            settings.AnagramCount,
-            settings.MinOutputWordsLength
-        )
-    );
+builder.Services.AddScoped<IAnagramSolver, AnagramSolverService>();
 
 var app = builder.Build();
 

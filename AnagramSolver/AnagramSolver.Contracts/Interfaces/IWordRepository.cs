@@ -1,10 +1,11 @@
 ﻿using AnagramSolver.Contracts.Models;
+using System.Collections;
 
 namespace AnagramSolver.Contracts.Interfaces
 {
     public interface IWordRepository
     {
-        Task<HashSet<WordModel>> ReadAllLinesAsync(CancellationToken ct = default);
+        Task<IEnumerable<WordModel>> ReadAllLinesAsync(CancellationToken ct = default);
 
         Task WriteToFileAsync(WordModel wordModel, CancellationToken ct = default);
     }

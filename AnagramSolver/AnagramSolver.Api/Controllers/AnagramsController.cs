@@ -20,7 +20,6 @@ namespace AnagramSolver.Api.Controllers
             _inputValidation = inputValidation;
         }
 
-        // GET api/<AnagramsController>/5
         [HttpGet("{word?}")]
         public async Task<ActionResult<IEnumerable<string>>> GetAsync(string? word, CancellationToken ct = default)
         {

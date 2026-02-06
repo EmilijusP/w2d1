@@ -9,7 +9,7 @@ namespace AnagramSolver.Contracts.Interfaces
 {
     public interface IAnagramDictionaryService
     {
-        List<Anagram> CreateAnagrams(HashSet<WordModel> wordModels);
+        IEnumerable<Anagram> CreateAnagrams(IEnumerable<WordModel> wordModels);
 
         Task<bool> AddWordAsync(string wordToAdd, CancellationToken ct = default);
 

@@ -13,11 +13,13 @@ namespace AnagramSolver.BusinessLogic.Data
             _filePath = filePath;
         }
 
-        public async Task<HashSet<WordModel>> ReadAllLinesAsync(CancellationToken ct)
+        public async Task<IEnumerable<WordModel>> ReadAllLinesAsync(CancellationToken ct)
         {
             var words = new HashSet<WordModel>();
 
             string[] textLines = await File.ReadAllLinesAsync(_filePath, ct);
+
+            int index = 0;
 
             foreach (string textLine in textLines)
             {
@@ -29,21 +31,27 @@ namespace AnagramSolver.BusinessLogic.Data
 
                 //zodynas.txt => 0     1        2    3
                 //zodynas.txt => lemma wordForm word frequency
+                int id = index;
                 string lemma = textLineArray[0];
                 string wordForm = textLineArray[1];
                 string word = textLineArray[2];
                 int frequency = Int32.Parse(textLineArray[3]);
 
-                words.Add(new WordModel 
-                { 
-                    Lemma = lemma.ToLower(), 
-                    Form = wordForm.ToLower(), 
-                    Word = word.ToLower(), 
-                    Frequency = frequency 
+                words.Add(new WordModel
+                {
+                    Id = id,
+                    Lemma = lemma.ToLower(),
+                    Form = wordForm.ToLower(),
+                    Word = word.ToLower(),
+                    Frequency = frequency
                 });
+
+                index++;
             }
 
-            return words;
+            var result = words.ToList();
+
+            return result;
         }
 
         public async Task WriteToFileAsync(WordModel wordModel, CancellationToken ct)

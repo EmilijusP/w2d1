@@ -19,7 +19,7 @@ namespace AnagramSolver.BusinessLogic.Services
             _inputValidation = inputValidation;
         }
 
-        public List<Anagram> CreateAnagrams(HashSet<WordModel> wordModels)
+        public IEnumerable<Anagram> CreateAnagrams(IEnumerable<WordModel> wordModels)
         {
             var dictionary = new Dictionary<string, Anagram>();
 
