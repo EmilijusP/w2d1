@@ -79,7 +79,7 @@ namespace AnagramSolver.Api.Controllers
         [HttpGet("download")]
         public IActionResult DownloadFile()
         {
-            string filePath = _settings.FileAbsolutePath;
+            string filePath = _settings.FilePath;
 
             if (!System.IO.File.Exists(filePath))
             {

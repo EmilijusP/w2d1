@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using AnagramSolver.Contracts.Models;
+using System.ComponentModel;
 
 namespace AnagramSolver.WebApp.Models
 {
@@ -6,7 +7,8 @@ namespace AnagramSolver.WebApp.Models
     {
         public string Word { get; set; }
 
-        public IEnumerable<string>? AnagramLines { get; set; } = new List<string>();
+        public IEnumerable<string>? Anagrams { get; set; } = new List<string>();
 
+        public string? ErrorMessage { get; set; }
     }
 }

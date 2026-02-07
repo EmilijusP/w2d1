@@ -1,20 +1,23 @@
-using AnagramSolver.BusinessLogic.Services;
+﻿using AnagramSolver.BusinessLogic.Services;
 using AnagramSolver.Contracts.Interfaces;
 using AnagramSolver.WebApp.Models;
+using AnagramSolver.Api.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
+using AnagramSolver.Contracts.Models;
 
 namespace AnagramSolver.WebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IAnagramSolver _anagramSolver;
+        private readonly HttpClient _httpClient;
 
-        public HomeController(ILogger<HomeController> logger, IAnagramSolver anagramSolver)
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
-            _anagramSolver = anagramSolver;
+            _httpClient = httpClientFactory.CreateClient("AnagramApi");
         }
 
         public async Task<IActionResult> Index(string? id, CancellationToken ct)
@@ -23,12 +26,27 @@ namespace AnagramSolver.WebApp.Controllers
 
             if (!string.IsNullOrEmpty(id))
             {
-                var anagrams = await _anagramSolver.GetAnagramsAsync(id, ct);
-                anagramViewModel = new AnagramViewModel 
-                { 
-                    Word = id,
-                    AnagramLines = anagrams 
-                };
+                var response = await _httpClient.GetAsync($"anagrams/{id}", ct);
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    var anagrams = await response.Content.ReadFromJsonAsync<List<string>>();
+
+                    anagramViewModel.Word = id;
+                    anagramViewModel.Anagrams = anagrams;
+                }
+
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    var message = await response.Content.ReadAsStringAsync(ct);
+                    anagramViewModel.ErrorMessage = message;
+                }
+
+                else
+                {
+                    var message = "Įvyko nenumatyta serverio klaida.";
+                    anagramViewModel.ErrorMessage = message;
+                }
             }
 
             return View(anagramViewModel);

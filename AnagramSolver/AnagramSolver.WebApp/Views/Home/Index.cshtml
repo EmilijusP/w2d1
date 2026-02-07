@@ -14,18 +14,23 @@
     </form>
 
     @{
-        if (Model.AnagramLines.Any())
+        if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <h1>@Model.ErrorMessage</h1>
+        }
+
+        else if (Model.Anagrams.Any())
         {
             <h2>Anagrams for "@Model.Word"</h2>
         }
-        else if (!string.IsNullOrEmpty(Model.Word) && !Model.AnagramLines.Any())
+        else if (!string.IsNullOrEmpty(Model.Word) && !Model.Anagrams.Any())
         {
             <h2>No anagrams for "@Model.Word" were found.</h2>
         }
     }
 
     <ul>
-        @foreach (var anagram in Model.AnagramLines)
+        @foreach (var anagram in Model.Anagrams)
         {
             <li>@anagram</li>
         }
