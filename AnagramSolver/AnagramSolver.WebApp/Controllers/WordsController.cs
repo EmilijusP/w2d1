@@ -57,8 +57,8 @@ namespace AnagramSolver.WebApp.Controllers
 
             var wordModel = new WordModel
             {
-                Lemma = lemma,
-                Form = form,
+                Lemma = lemma ?? "-",
+                Form = form ?? "-",
                 Word = word,
                 Frequency = 1
             };
