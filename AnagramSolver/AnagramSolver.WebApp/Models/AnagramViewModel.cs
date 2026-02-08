@@ -10,5 +10,7 @@ namespace AnagramSolver.WebApp.Models
         public IEnumerable<string>? Anagrams { get; set; } = new List<string>();
 
         public string? ErrorMessage { get; set; }
+
+        public string? LastSearch { get; set; }
     }
 }

@@ -23,6 +23,10 @@ namespace AnagramSolver.WebApp.Controllers
         public async Task<IActionResult> Index(string? id, CancellationToken ct)
         {
             var anagramViewModel = new AnagramViewModel();
+         
+            var lastSearch = Request.Cookies["lastSearch"];
+
+            anagramViewModel.LastSearch = lastSearch;
 
             if (!string.IsNullOrEmpty(id))
             {
@@ -34,6 +38,12 @@ namespace AnagramSolver.WebApp.Controllers
 
                     anagramViewModel.Word = id;
                     anagramViewModel.Anagrams = anagrams;
+
+                    Response.Cookies.Append("lastSearch", $"{id}", new CookieOptions
+                    {
+                        Expires = DateTimeOffset.Now.AddHours(2),
+                        HttpOnly = true
+                    });
                 }
 
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
