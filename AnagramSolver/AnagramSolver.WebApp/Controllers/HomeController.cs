@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
 using AnagramSolver.Contracts.Models;
+using System.Text.Json.Serialization;
 
 namespace AnagramSolver.WebApp.Controllers
 {
@@ -28,22 +29,35 @@ namespace AnagramSolver.WebApp.Controllers
 
             anagramViewModel.LastSearch = lastSearch;
 
+            var sessionInfo = HttpContext.Session.GetString("SearchHistory");
+
+            var searchHistory = sessionInfo == null
+                ? new List<string>()
+                : JsonSerializer.Deserialize<List<string>>(sessionInfo);
+
             if (!string.IsNullOrEmpty(id))
             {
                 var response = await _httpClient.GetAsync($"anagrams/{id}", ct);
-                
+
+                Response.Cookies.Append("lastSearch", $"{id}", new CookieOptions
+                {
+                    Expires = DateTimeOffset.Now.AddHours(2),
+                    HttpOnly = true
+                });
+
+                searchHistory.Add(id);
+
+                HttpContext.Session.SetString("SearchHistory", JsonSerializer.Serialize(searchHistory));
+
+                anagramViewModel.SearchHistory = searchHistory;
+
                 if (response.IsSuccessStatusCode)
                 {
                     var anagrams = await response.Content.ReadFromJsonAsync<List<string>>();
 
+
                     anagramViewModel.Word = id;
                     anagramViewModel.Anagrams = anagrams;
-
-                    Response.Cookies.Append("lastSearch", $"{id}", new CookieOptions
-                    {
-                        Expires = DateTimeOffset.Now.AddHours(2),
-                        HttpOnly = true
-                    });
                 }
 
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)

@@ -12,5 +12,7 @@ namespace AnagramSolver.WebApp.Models
         public string? ErrorMessage { get; set; }
 
         public string? LastSearch { get; set; }
+
+        public List<string>? SearchHistory { get; set; } = new List<string>();
     }
 }
